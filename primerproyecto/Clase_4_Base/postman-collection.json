@@ -1,0 +1,217 @@
+{
+  "info": {
+    "name": "SC-403 - Clase 4 (clase4base)",
+    "_postman_id": "sc403-clase4-base-collection",
+    "description": "Coleccion de peticiones para probar el proyecto base de la Clase 4.\n\nIncluye:\n- Endpoints actuales (datos en memoria)\n- Endpoints despues del refactor con MySQL/JPA\n- Variables: usar {{base_url}} para cambiar de localhost al server desplegado\n\nImportar desde Postman:\nFile -> Import -> seleccionar este .json",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Home",
+      "description": "Pagina de inicio. Acepta ?nombre= opcional.",
+      "item": [
+        {
+          "name": "GET / (sin parametro)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/",
+              "host": ["{{base_url}}"],
+              "path": [""]
+            },
+            "description": "Pagina de inicio con el saludo por defecto (\"Estudiante\")."
+          },
+          "response": []
+        },
+        {
+          "name": "GET / con ?nombre",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/?nombre=Esteban",
+              "host": ["{{base_url}}"],
+              "path": [""],
+              "query": [
+                {
+                  "key": "nombre",
+                  "value": "Esteban",
+                  "description": "Nombre a saludar"
+                }
+              ]
+            },
+            "description": "Pagina de inicio con saludo personalizado."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Cursos",
+      "description": "Listado y detalle de cursos.",
+      "item": [
+        {
+          "name": "GET /cursos (listar)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/cursos",
+              "host": ["{{base_url}}"],
+              "path": ["cursos"]
+            },
+            "description": "Lista todos los cursos. Antes del refactor: vienen de memoria. Despues: vienen de MySQL via JpaRepository.findAll()."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /cursos/1 (detalle - existente)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/cursos/1",
+              "host": ["{{base_url}}"],
+              "path": ["cursos", "1"]
+            },
+            "description": "Detalle del curso ID=1 (Fundamentos Web)."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /cursos/2",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/cursos/2",
+              "host": ["{{base_url}}"],
+              "path": ["cursos", "2"]
+            },
+            "description": "Detalle del curso ID=2 (Spring Boot)."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /cursos/999 (caso 'no encontrado')",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/cursos/999",
+              "host": ["{{base_url}}"],
+              "path": ["cursos", "999"]
+            },
+            "description": "Caso 'no encontrado'. La vista muestra un alert warning de Bootstrap."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Demo en clase",
+      "description": "Peticiones utiles para mostrar conceptos en vivo.",
+      "item": [
+        {
+          "name": "Ver headers de respuesta",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/html"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/cursos",
+              "host": ["{{base_url}}"],
+              "path": ["cursos"]
+            },
+            "description": "Mostrar a los estudiantes los headers de respuesta: Content-Type, Content-Length, etc. Ir a la pestana 'Headers' del response."
+          },
+          "response": []
+        },
+        {
+          "name": "Probar 404 explicito",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/no-existe",
+              "host": ["{{base_url}}"],
+              "path": ["no-existe"]
+            },
+            "description": "Ruta inexistente. Spring Boot devuelve la 'Whitelabel Error Page' con status 404."
+          },
+          "response": []
+        },
+        {
+          "name": "Metodo no permitido (POST a GET)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{base_url}}/cursos",
+              "host": ["{{base_url}}"],
+              "path": ["cursos"]
+            },
+            "description": "Demuestra status 405 Method Not Allowed: el endpoint /cursos solo acepta GET."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Despliegue cloud (Render.com)",
+      "description": "Mismas peticiones contra el server desplegado. Cambiar {{base_url}} en Variables.",
+      "item": [
+        {
+          "name": "GET / (en produccion)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/?nombre=Estudiante",
+              "host": ["{{base_url}}"],
+              "path": [""],
+              "query": [
+                {
+                  "key": "nombre",
+                  "value": "Estudiante"
+                }
+              ]
+            },
+            "description": "Probar la app desplegada en Render.com. Cambiar la variable base_url a la URL publica."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /cursos (en produccion)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/cursos",
+              "host": ["{{base_url}}"],
+              "path": ["cursos"]
+            },
+            "description": "Listado de cursos en la app desplegada."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+target/
+.mvn/
+HELP.md
+mvnw
+mvnw.cmd
+
+# IDEs
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+.classpath
+.project
+.settings/
+
+# Build
+build/
+out/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Sensible
+application-local.properties

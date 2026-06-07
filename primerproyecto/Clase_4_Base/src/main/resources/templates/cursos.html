@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursos | SC-403</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: navbar}"></div>
+
+<main class="container my-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="mb-1">Cursos disponibles</h1>
+            <p class="text-muted">
+                Total:
+                <span class="badge bg-primary" th:text="${cursos.size()}">0</span>
+            </p>
+        </div>
+    </div>
+
+    <!--
+      Iteracion con th:each.
+      Cada elemento "c" es un objeto Curso, accedemos a sus campos con c.id, c.nombre, etc.
+    -->
+    <div class="row g-3">
+        <div class="col-12 col-md-6 col-lg-4"
+             th:each="c, iter : ${cursos}">
+
+            <div class="card h-100 shadow-sm card-hover">
+                <div class="card-body d-flex flex-column">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <span class="badge bg-secondary mb-2"
+                              th:text="'#' + ${iter.count}">#1</span>
+                        <span class="badge bg-info text-dark"
+                              th:text="${c.creditos} + ' creditos'">0 creditos</span>
+                    </div>
+
+                    <h5 class="card-title brand-accent" th:text="${c.nombre}">
+                        Nombre del curso
+                    </h5>
+
+                    <p class="text-muted small flex-grow-1"
+                       th:text="${c.descripcion}">
+                        Descripcion breve del curso.
+                    </p>
+
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <small class="text-muted">
+                            <i class="bi bi-person-circle me-1"></i>
+                            <span th:text="${c.profesor}">Profesor</span>
+                        </small>
+                        <a class="btn btn-outline-primary btn-sm"
+                           th:href="@{/cursos/{id}(id=${c.id})}">
+                            Ver detalle
+                            <i class="bi bi-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mensaje cuando no hay cursos (por ej. si vacian la tabla en clase) -->
+    <div class="alert alert-warning mt-4"
+         th:if="${cursos.isEmpty()}">
+        <i class="bi bi-exclamation-triangle me-2"></i>
+        No hay cursos para mostrar.
+    </div>
+
+</main>
+
+<footer th:replace="~{fragments/header :: footer}"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

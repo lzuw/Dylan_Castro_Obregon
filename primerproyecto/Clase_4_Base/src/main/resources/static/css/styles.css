@@ -1,0 +1,32 @@
+/* Estilos del curso - paleta y utilitarias propias */
+
+:root {
+    --brand: #150D48;
+    --brand-accent: #7c6bff;
+    --brand-soft: #f5f5fa;
+}
+
+body {
+    background: var(--brand-soft);
+}
+
+.brand-bg     { background-color: var(--brand) !important; color: #fff; }
+.brand-accent { color: var(--brand-accent) !important; }
+
+/* Hover sutil para las cards de cursos */
+.card-hover {
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+.card-hover:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .12) !important;
+}
+
+/* Footer fijo discreto */
+.footer-curso {
+    margin-top: 4rem;
+    padding: 1.5rem 0;
+    color: #6c757d;
+    font-size: .85rem;
+    text-align: center;
+}
