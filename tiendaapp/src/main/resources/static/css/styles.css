@@ -1,0 +1,36 @@
+/* Paleta del curso */
+:root {
+    --brand: #150D48;
+    --brand-accent: #7c6bff;
+    --brand-light: #f5f5fa;
+}
+
+body {
+    background: var(--brand-light);
+}
+
+.brand-bg     { background-color: var(--brand) !important; color: #fff; }
+.brand-accent { color: var(--brand-accent) !important; }
+
+/* Hover en cards */
+.card-hover {
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+.card-hover:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .12) !important;
+}
+
+/* Footer */
+.footer-curso {
+    margin-top: 4rem;
+    padding: 1.5rem 0;
+    color: #6c757d;
+    font-size: .85rem;
+    text-align: center;
+}
+
+/* Estado de stock */
+.stock-ok       { color: #198754; }
+.stock-bajo     { color: #fd7e14; }
+.stock-agotado  { color: #dc3545; }
