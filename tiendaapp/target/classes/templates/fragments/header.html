@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!-- Navbar reutilizable -->
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark brand-bg px-4 shadow-sm">
+    <a class="navbar-brand fw-bold" href="/?nombre=Estudiante">
+        <i class="bi bi-shop me-2"></i>TiendaApp
+    </a>
+    <button class="navbar-toggler" type="button"
+            data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/?nombre=Estudiante">
+                    <i class="bi bi-house me-1"></i>Inicio
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/productos">
+                    <i class="bi bi-box-seam me-1"></i>Productos
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/productos/bajo-stock">
+                    <i class="bi bi-exclamation-triangle me-1"></i>Bajo Stock
+                </a>
+            </li>
+        </ul>
+        <form class="d-flex" action="/productos" method="get">
+            <input class="form-control me-2" type="search" name="buscar"
+                   placeholder="Buscar producto...">
+            <button class="btn btn-outline-light" type="submit">
+                <i class="bi bi-search"></i>
+            </button>
+        </form>
+    </div>
+</nav>
+
+<!-- Footer reutilizable -->
+<footer th:fragment="footer" class="footer-curso">
+    <p>SC-403 - Desarrollo de Aplicaciones Web y Patrones</p>
+    <p class="small text-muted">Universidad Fidelitas - Resumen Clases 1 a 4</p>
+</footer>
+
+</body>
+</html>
