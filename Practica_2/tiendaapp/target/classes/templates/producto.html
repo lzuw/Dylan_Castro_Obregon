@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${producto != null} ? ${producto.nombre} : 'No encontrado'">Producto</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: navbar}"></div>
+
+<main class="container my-4">
+
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/?nombre=Estudiante">Inicio</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="/productos">Productos</a>
+            </li>
+            <li class="breadcrumb-item active"
+                th:text="${producto != null} ? ${producto.nombre} : 'No encontrado'">
+                Producto
+            </li>
+        </ol>
+    </nav>
+
+    <!-- Producto encontrado -->
+    <div th:if="${producto != null}">
+        <div class="card border-0 shadow">
+            <div class="card-header brand-bg">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2 class="mb-0" th:text="${producto.nombre}">Producto</h2>
+                    <span class="badge bg-light text-dark" th:text="${producto.categoria}">categoria</span>
+                </div>
+            </div>
+            <div class="card-body">
+                <p class="lead" th:text="${producto.descripcion}">descripcion</p>
+
+                <div class="row mt-4">
+                    <div class="col-md-4">
+                        <div class="border rounded p-3 text-center">
+                            <i class="bi bi-tag brand-accent" style="font-size:1.5rem;"></i>
+                            <div class="small text-muted mt-2">Precio</div>
+                            <div class="h4 mb-0">
+                                $<span th:text="${#numbers.formatDecimal(producto.precio, 1, 2)}">0.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="border rounded p-3 text-center">
+                            <i class="bi bi-box brand-accent" style="font-size:1.5rem;"></i>
+                            <div class="small text-muted mt-2">Stock</div>
+                            <div class="h4 mb-0" th:text="${producto.stock}">0</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="border rounded p-3 text-center">
+                            <i class="bi bi-hash brand-accent" style="font-size:1.5rem;"></i>
+                            <div class="small text-muted mt-2">ID</div>
+                            <div class="h4 mb-0" th:text="${producto.id}">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <span class="alert alert-success p-2 small"
+                          th:if="${!producto.agotado and !producto.bajoStock}">
+                        <i class="bi bi-check-circle me-1"></i> Disponible para compra
+                    </span>
+                    <span class="alert alert-warning p-2 small" th:if="${producto.bajoStock}">
+                        <i class="bi bi-exclamation-triangle me-1"></i> Quedan pocas unidades
+                    </span>
+                    <span class="alert alert-danger p-2 small" th:if="${producto.agotado}">
+                        <i class="bi bi-x-circle me-1"></i> Sin stock
+                    </span>
+                </div>
+
+                <a class="btn btn-secondary mt-4" href="/productos">
+                    <i class="bi bi-arrow-left me-1"></i>Volver
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Producto NO encontrado -->
+    <div th:if="${producto == null}" class="alert alert-warning">
+        <h4 class="alert-heading">
+            <i class="bi bi-exclamation-triangle me-2"></i>
+            Producto no encontrado
+        </h4>
+        <p>No existe un producto con ese ID.</p>
+        <hr>
+        <a class="btn btn-warning" href="/productos">Volver a la lista</a>
+    </div>
+
+</main>
+
+<footer th:replace="~{fragments/header :: footer}"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

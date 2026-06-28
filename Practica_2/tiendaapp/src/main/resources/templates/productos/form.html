@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${producto.id == null ? 'Nuevo producto' : 'Editar producto'}">Formulario</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: navbar}"></div>
+
+<main class="container my-4" style="max-width: 600px;">
+
+    <h1 class="mb-4" th:text="${producto.id == null ? 'Nuevo producto' : 'Editar producto'}">Formulario</h1>
+
+    <form th:object="${producto}"
+          th:action="${producto.id == null ? '/productos' : '/productos/' + producto.id}"
+          method="post">
+
+        <input type="hidden" th:field="*{id}">
+
+        <!-- Nombre -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Nombre *</label>
+            <input type="text" class="form-control" th:field="*{nombre}"
+                   th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid'">
+            <div class="invalid-feedback" th:errors="*{nombre}">Error</div>
+        </div>
+
+        <!-- Descripción -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Descripción</label>
+            <textarea class="form-control" rows="3" th:field="*{descripcion}"
+                      th:classappend="${#fields.hasErrors('descripcion')} ? 'is-invalid'"></textarea>
+            <div class="invalid-feedback" th:errors="*{descripcion}">Error</div>
+        </div>
+
+        <!-- Precio -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Precio *</label>
+            <input type="number" step="0.01" class="form-control" th:field="*{precio}"
+                   th:classappend="${#fields.hasErrors('precio')} ? 'is-invalid'">
+            <div class="invalid-feedback" th:errors="*{precio}">Error</div>
+        </div>
+
+        <!-- Stock -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Stock *</label>
+            <input type="number" class="form-control" th:field="*{stock}"
+                   th:classappend="${#fields.hasErrors('stock')} ? 'is-invalid'">
+            <div class="invalid-feedback" th:errors="*{stock}">Error</div>
+        </div>
+
+        <!-- Categoría -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Categoría</label>
+            <input type="text" class="form-control" th:field="*{categoria}"
+                   th:classappend="${#fields.hasErrors('categoria')} ? 'is-invalid'">
+            <div class="invalid-feedback" th:errors="*{categoria}">Error</div>
+        </div>
+
+        <!-- Botones -->
+        <div class="d-flex gap-2 mt-4">
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-save me-1"></i>Guardar
+            </button>
+            <a href="/productos" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left me-1"></i>Cancelar
+            </a>
+        </div>
+
+    </form>
+</main>
+
+<footer th:replace="~{fragments/header :: footer}"></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
